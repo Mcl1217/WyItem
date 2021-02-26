@@ -11,12 +11,13 @@
 
 <script>
     import BScroll from 'better-scroll'
+
     export default {
         name: "CategoryLeft",
         data() {
             return {
                 navList: [],
-                currentIndex:0
+                currentIndex: 0
             }
         },
         mounted() {
@@ -34,9 +35,9 @@
                 const result = await this.$API.getCateNav()
                 this.navList = result.data.categoryL1List
             },
-            changeNav(i,id){
+            changeNav(i, id) {
                 this.currentIndex = i
-                this.$globalEventBus.$emit("changeId",id)
+                this.$globalEventBus.$emit("changeId", id)
             }
         },
     }
@@ -49,19 +50,23 @@
         overflow: hidden
         border-right 1px solid #D9D9D9
         box-sizing border-box
+
         .left
             width 100%
             height calc(100vh)
             box-sizing border-box
+
             .leftItem
                 text-align center
                 margin-top 30px
                 box-sizing border-box
+
                 .text
                     height 20px
                     line-height 20px
                     box-sizing border-box
+
                     &.active
-                        border-left  2px solid red
+                        border-left 2px solid red
 
 </style>

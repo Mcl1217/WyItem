@@ -83,14 +83,16 @@
                         <span>热销榜</span>
                         <i></i>
                     </div>
-                    <img src="https://yanxuan-item.nosdn.127.net/db4a9cbd2bdfed303e2536db8b40fe33.png?quality=75&type=webp&imageView&thumbnail=200x200" alt="">
+                    <img src="https://yanxuan-item.nosdn.127.net/db4a9cbd2bdfed303e2536db8b40fe33.png?quality=75&type=webp&imageView&thumbnail=200x200"
+                         alt="">
                 </div>
                 <div class="topItem">
                     <div class="left">
                         <span>好评榜</span>
                         <i></i>
                     </div>
-                    <img src="https://yanxuan-item.nosdn.127.net/bb9025c24057dfb89403055ac5b9f85c.png?quality=75&type=webp&imageView&thumbnail=200x200" alt="">
+                    <img src="https://yanxuan-item.nosdn.127.net/bb9025c24057dfb89403055ac5b9f85c.png?quality=75&type=webp&imageView&thumbnail=200x200"
+                         alt="">
                 </div>
             </div>
             <div class="bottom">
@@ -146,6 +148,9 @@
             </div>
         </div>
 
+        <div class="goTop" v-if="goTopFlag" @click="toTop">
+            <i class="iconfont icon-jiantoushang"></i>
+        </div>
     </div>
 </template>
 
@@ -168,20 +173,43 @@
                         el: '.swiper-pagination',
                         // clickable: true,
                     },
-                }
+                },
+                goTopFlag: false//显示回到顶部的容器的标志
             }
         },
         mounted() {
             this.$store.dispatch("getHome")
+            window.addEventListener("scroll", this.showToTop)
+        },
+        methods: {
+            toTop() {
+                if (!this.timer) {
+                    let timer = setInterval(() => {
+                        document.documentElement.scrollTop -= 20
+                        if (document.documentElement.scrollTop === 0) {
+                            clearInterval(timer)
+                        }
+                    }, 3)
+                }
+                this.timer = null
+                this.goTopFlag = false
+            },
+            showToTop() {
+                this.scrollTop = document.documentElement.scrollTop
+                this.clientHeight = document.documentElement.clientHeight
+                if (this.scrollTop >= this.clientHeight) {
+                    this.goTopFlag = true
+                } else this.goTopFlag = false
+            }
         },
         computed: {
             ...mapState({
-                focusList:({home}) => home.focusList,
+                focusList: ({home}) => home.focusList,
                 policyDescList: ({home}) => home.policyDescList,
-                kingKongList:({home}) => home.kingKongList,
-                categoryList:({home}) => home.categoryList,
-                newItemList:({home}) => home.newItemList,
-                sceneLightShoppingGuideModule:({home}) => home.sceneLightShoppingGuideModule,
+                kingKongList: ({home}) => home.kingKongList,
+                categoryList: ({home}) => home.categoryList,
+                newItemList: ({home}) => home.newItemList,
+                sceneLightShoppingGuideModule: ({home}) => home.sceneLightShoppingGuideModule,
             })
         },
     }
@@ -216,6 +244,7 @@
                 img
                     width 16px
                     height 16px
+
                 span
                     white-space nowrap
 
@@ -462,6 +491,7 @@
                 .bottomItem
                     width 33%
                     font-size 12px
+
                     .hide
                         overflow hidden
                         text-overflow ellipsis
@@ -469,6 +499,7 @@
                         -webkit-line-clamp 2
                         -webkit-box-orient vertical
                         line-height 18px
+
                     img
                         width 108px
                         height: 108px
@@ -538,4 +569,21 @@
                 left -3px
                 text-align center
                 color #999
+
+
+        .goTop
+            width 40px
+            height 40px
+            background-color rgba(235, 235, 235, .8)
+            position fixed
+            right 14px
+            bottom 90px
+            border-radius 50%
+            display flex
+            justify-content center
+            align-items center
+            /*transition: all .6s ease-in*/
+
+            i
+                font-size 30px
 </style>

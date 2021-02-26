@@ -44,8 +44,9 @@
         },
         methods: {
             toRegister(flag) {
+                // 从当前路由中取出未登录前想要去的页面的路径
                 const redirectAgain = this.$route.query.redirect || "/"
-                console.log(redirectAgain);
+                // console.log(redirectAgain);
                 if(flag)  this.$router.replace("/logintype/1/?redirectagain=" + redirectAgain)
                 else this.$router.replace("/logintype/0/?redirectagain=" + redirectAgain)
 

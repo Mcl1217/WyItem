@@ -3,7 +3,7 @@
         <header>
             <img src="../../assets/images/logo.png" alt="网易严选">
             <div @click="toSearch">
-                <i class="iconfont icon-search" ></i>
+                <i class="iconfont icon-search"></i>
                 <input type="text" placeholder="搜索商品,共60000件好物">
             </div>
             <button @click="toLogin" v-if="!token">登录</button>
@@ -12,7 +12,7 @@
         <div class="nav">
 
             <ul>
-                <li  v-for="(e,i) in indexCateModule" :key="i" @click="changeNav(i)">
+                <li v-for="(e,i) in indexCateModule" :key="i" @click="changeNav(i)">
                     <span :class="{active:currentIndex === i}">{{e.name}}</span>
                 </li>
             </ul>
@@ -22,7 +22,8 @@
         <div class="box" ref="box" :class="{show:rotate}">
             <div class="all">全部频道</div>
             <div class="sort">
-                <div class="allItem" :class="{xz:currentIndex === i}" v-for="(e,i) in indexCateModule" :key="i" @click="changeNav(i)">
+                <div class="allItem" :class="{xz:currentIndex === i}" v-for="(e,i) in indexCateModule" :key="i"
+                     @click="changeNav(i)">
                     <span>{{e.name}}</span>
                 </div>
             </div>
@@ -40,14 +41,15 @@
         name: "Home",
         data() {
             return {
-                navName: "Recommend",
-                currentIndex:0,
-                rotate: false,
-                token:"",
-                componentList:['Recommend','Life','Shoe','Liquor']
+                navName: "Recommend",//动态组件初始化展示的组件
+                currentIndex: 0,//导航切换标志
+                rotate: false,//箭头旋转标志
+                token: "",//用户登录的标志,用来是否显示头部登录按钮
+                componentList: ['Recommend', 'Life', 'Shoe', 'Liquor']//首页导航切换用到的所有的组件集合
             }
         },
         components: {
+            // 异步注册组件
             Recommend: () => import('../../components/Recommend/Recommend'),
             Life: () => import('../../components/Life/Life'),
             Shoe: () => import('../../components/Shoe/Shoe'),
@@ -59,7 +61,6 @@
             },
             showBox() {
                 if (!this.rotate) {
-                    // this.$refs.box.style.height = 170 + "px"
                     this.$refs.box.style.height = 100 + "vh"
 
                 } else {
@@ -67,10 +68,10 @@
                 }
                 this.rotate = !this.rotate
             },
-            toLogin(){
+            toLogin() {
                 this.$router.push("/login")
             },
-            toSearch(){
+            toSearch() {
                 this.$router.push("/search")
             }
         },
@@ -82,7 +83,7 @@
                     click: true
                 });
             })
-           this.navName = "Recommend"
+            this.navName = "Recommend"
             this.token = localStorage.getItem('USER_TOKEN')
         },
         computed: {
@@ -91,6 +92,7 @@
             }),
         },
         watch: {
+            // 索引改变,动态显示对应组件
             currentIndex: {
                 handler(newValue, oldValue) {
                     this.navName = this.componentList[newValue]
@@ -164,17 +166,22 @@
             position relative
             overflow hidden
             font-size 14px
+
             ul
                 width 840px
                 display flex
+                overflow hidden
+
                 li
                     position relative
                     height 30px
                     padding 0 16px
                     white-space nowrap
                     position relative
+
                     span
                         position relative
+
                         &.active
                             height 1px
                             border-bottom 2px solid red
@@ -191,6 +198,7 @@
                 top 0
                 z-index 99
                 transition: all .3s ease-in
+
                 &.rotate
                     transform rotate(180deg)
 
@@ -211,6 +219,7 @@
                 padding 5px 0 0 8px
                 box-sizing border-box
                 background-color white
+
             .sort
                 margin-top 30px
                 width 100%
@@ -219,6 +228,7 @@
                 padding-left 10px
                 box-sizing border-box
                 background-color white
+
                 .allItem
                     width 23%
                     height 28px
@@ -230,11 +240,12 @@
                     margin 0px 5px 15px 0px
                     border-radius 5px
                     font-size 12px
+
                     &.xz
                         border 1px solid red
 
         .show
             display block
             transition: all .6s ease-in
-            background-color rgba(127,127,127,.7)
+            background-color rgba(127, 127, 127, .7)
 </style>

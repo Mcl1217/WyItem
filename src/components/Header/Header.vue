@@ -14,7 +14,7 @@
 <script>
     export default {
         name: "Header",
-        props:["text"],
+        props:["text"],//动态显示头部标题
         methods: {
             goHome() {
                 this.$router.push("/")

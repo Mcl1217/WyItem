@@ -1,23 +1,23 @@
 <template>
     <div class="searchContainer">
-        <div class="header" >
-           <div>
-               <i class="iconfont icon-search"></i>
-               <input type="search"
-                      placeholder="请输入商品名称"
-                      v-model="keyWord"
-                      @keyup.enter="submit"
-                      @focus="showBox"
-                      @input="submit"
-               >
-               <i class="iconfont icon-cuowu" v-if="flag" @click="clear"></i>
-           </div>
+        <div class="header">
+            <div>
+                <i class="iconfont icon-search"></i>
+                <input type="search"
+                       placeholder="请输入商品名称"
+                       v-model="keyWord"
+                       @keyup.enter="submit"
+                       @focus="showBox"
+                       @input="submit"
+                >
+                <i class="iconfont icon-cuowu" v-if="flag" @click="clear"></i>
+            </div>
             <div>
                 <router-link to="/">取消</router-link>
             </div>
         </div>
 
-        <div class="zz"  v-if="flag">
+        <div class="zz" v-if="flag">
             <div class="zzItem" v-for="(e,i) in searchData" :key="i">
                 <span>{{e}}</span>
                 <i class="iconfont icon-jiantou"></i>
@@ -25,7 +25,7 @@
         </div>
 
 
-        <div class="hotSearch"  v-if="!flag">
+        <div class="hotSearch" v-if="!flag">
             <span v-if="initDate.length">热门搜索</span>
             <div v-if="initDate.length">
                 <span :class="{active:currentIndex === i}"
@@ -44,41 +44,41 @@
         name: "Search",
         data() {
             return {
-                keyWord: "",
-                initDate:[],
-                currentIndex:0,
-                flag:false,
-                searchData:[]
+                keyWord: "",//收集关键词
+                initDate: [],//初始化展示搜索词的集合
+                currentIndex: 0,//标志搜索词切换
+                flag: false,//显示下方实时显示关键词相关容器的标志
+                searchData: []//搜索关键词相关内容的集合
             }
         },
         methods: {
-            clear(){
+            clear() {
                 this.flag = false
                 this.searchData = []
                 this.keyWord = ''
             },
-            showBox(){
+            showBox() {
                 this.flag = true
             },
             submit() {
                 const {keyWord} = this
-                if(keyWord){
+                if (keyWord) {
                     this.getKeyWord(keyWord)
                 }
             },
-            async getInitData(){
+            async getInitData() {
                 const result = await this.$API.getSearchData()
                 // console.log(result);
                 this.initDate = result.data.hotKeywordVOList
             },
-            async getKeyWord(keyWord){
+            async getKeyWord(keyWord) {
                 const result = await this.$API.getSearchKeyWords(keyWord)
                 // console.log(result);
                 this.searchData = result.data
             }
         },
         mounted() {
-           this.getInitData()
+            this.getInitData()
         }
     }
 </script>
@@ -91,22 +91,27 @@
         /*padding 0 10px*/
         box-sizing border-box
         background-color #EEEEEE
+
         .header
             display flex
             height 44px
             justify-content space-between
             align-items center
             background-color white
+
             & div:first-child
                 position relative
                 left 10px
+
                 i
                     position absolute
                     top 8px
                     left 10px
+
                     &.icon-cuowu
                         left auto
                         right 0px
+
                 input
                     width 280px
                     height 30px
@@ -115,15 +120,18 @@
                     padding-left 30px
                     outline none
                     background-color #F4F4F4
+
             & div:nth-child(2)
                 width 60px
                 text-align center
                 font-size 15px
                 color black
+
         .zz
             width 100%
             /*height 300px*/
             background-color white
+
             .zzItem
                 width 100%
                 height 50px
@@ -131,11 +139,12 @@
                 box-sizing border-box
 
                 font-size 14px
-                font-family: PingFangSC-Light,helvetica,Heiti SC
+                font-family: PingFangSC-Light, helvetica, Heiti SC
                 display flex
                 justify-content space-between
                 align-items center
                 position relative
+
                 &::after
                     content ""
                     position absolute
@@ -154,10 +163,12 @@
             margin-top 20px
             padding-left 10px
             overflow hidden
+
             span
                 color #999999
                 display block
                 margin-top 5px
+
             div
                 display flex
                 flex-wrap wrap
