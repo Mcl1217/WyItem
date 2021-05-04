@@ -39,7 +39,7 @@
                 this.currentIndex = i
                 this.$globalEventBus.$emit("changeId", id)
             }
-        },
+        }
     }
 </script>
 

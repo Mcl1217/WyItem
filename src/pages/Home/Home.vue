@@ -28,7 +28,9 @@
                 </div>
             </div>
         </div>
-        <component :is="navName" ref="zh"></component>
+       <keep-alive>
+           <component :is="navName" ref="zh"></component>
+       </keep-alive>
 
     </div>
 </template>
